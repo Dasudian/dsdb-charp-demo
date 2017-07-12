@@ -13,9 +13,8 @@ namespace demo
         {
             DsdbClient client = new DsdbClient();
             ErrorCode ret;
-
-            client.setDebug();
-
+            
+            /* 从App.conf中读取ip地址和端口号, 连接dsdb服务器 */
             ret = client.connect();
             if (ErrorCode.Success == ret)
             {
@@ -31,7 +30,8 @@ namespace demo
             String bucket = "bird";
             String key = "canFly";
             String value = "true";
-
+            
+            /* 插入数据(如果数据存在会被覆盖) */
             ret = client.put(bucketType, bucket, key, value);
             if (ErrorCode.Success == ret)
             {
@@ -44,6 +44,7 @@ namespace demo
             }
 
             String valueGet;
+            /* 从数据库中读取数据 */
             ret = client.get(bucketType, bucket, key, out valueGet);
             if (ErrorCode.Success == ret)
             {
@@ -54,7 +55,8 @@ namespace demo
             {
                 Console.WriteLine("failed to get data from dsdb server, ret " + ret);
             }
-
+            
+            /* 删除数据 */
             ret = client.delete(bucketType, bucket, key);
             if (ErrorCode.Success == ret)
             {
@@ -65,9 +67,11 @@ namespace demo
             {
                 Console.WriteLine("failed to delete data of dsdb server, ret " + ret);
             }
-
+            
+            /* 断开与服务器的连接 */
             client.disconnect();
 exit:
+            /* 防止终端直接退出 */
             Console.ReadKey();
         }
     }
