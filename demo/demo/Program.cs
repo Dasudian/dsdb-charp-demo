@@ -28,8 +28,8 @@ namespace demo
 
             String bucketType = "people";
             String bucket = "people_0807_01";
-            String key = "people_0807_01";
-            String value3 = "{\"name\":\"kevinday0807_01\",\"age\":88,\"leader\":false}";
+            String key = "key_0807_01";
+            String value3 = "{\"name\":\"name_0807_01\",\"age\":88,\"leader\":false}";
 
             /* 插入数据(如果数据存在会被覆盖) */
             ret = client.put(bucketType, bucket, key, value3);
@@ -54,24 +54,12 @@ namespace demo
             else
             {
                 Console.WriteLine("failed to get data from dsdb server, ret " + ret);
-            }
-
-            ///* 删除数据 */
-            //ret = client.delete(bucketType, bucket, key);
-            //if (ErrorCode.Success == ret)
-            //{
-            //    Console.WriteLine("successfully delete data, bucketType {0} bucket {1} key {2}",
-            //        bucketType, bucket, key);
-            //}
-            //else
-            //{
-            //    Console.WriteLine("failed to delete data of dsdb server, ret " + ret);
-            //}
+            }        
 
             /* 搜索数据 */
             SearchOptions so = new SearchOptions();
             so.index = "people";
-            so.condition = "name:kevinday0807_01";
+            so.condition = "name:name_0807_01";
             so.rows = 100;
             so.start = 0;
 
