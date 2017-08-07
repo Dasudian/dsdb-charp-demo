@@ -14,7 +14,7 @@
 在该目录下有App.config文件，请修改yourServerUrl 和 yourPort 
 
 ## lib目录
-该目录下有最新的SDK库，支持.NET Framework 4.5及以上版本。
+该目录下有最新的SDK库，支持.NET Framework 4.0及以上版本。
 
 ## docs目录
 
@@ -22,6 +22,6 @@
 
 # 编译和运行
 
-demo程序基于Visual Studio 2013，.NET Framework 4.5。
+demo程序基于Visual Studio 2013，.NET Framework 4.0。
 
 使用Visual Studio打开项目编译运行即可。

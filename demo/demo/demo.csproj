@@ -32,9 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="dsdb-sdk-csharp-1.0.0">
-      <HintPath>..\..\lib\dsdb-sdk-csharp-1.0.0.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
