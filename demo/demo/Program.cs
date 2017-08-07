@@ -13,7 +13,7 @@ namespace demo
         {
             DsdbClient client = new DsdbClient();
             ErrorCode ret;
-            
+
             /* 从App.conf中读取ip地址和端口号, 连接dsdb服务器 */
             ret = client.connect();
             if (ErrorCode.Success == ret)
@@ -27,16 +27,16 @@ namespace demo
             }
 
             String bucketType = "people";
-            String bucket = "bird";
-            String key = "canFly";
-            String value = "true";
-            
+            String bucket = "people_0807_01";
+            String key = "key_0807_01";
+            String value3 = "{\"name\":\"name_0807_01\",\"age\":88,\"leader\":false}";
+
             /* 插入数据(如果数据存在会被覆盖) */
-            ret = client.put(bucketType, bucket, key, value);
+            ret = client.put(bucketType, bucket, key, value3);
             if (ErrorCode.Success == ret)
             {
                 Console.WriteLine("successfully put data, bucketType {0} bucket {1} key {2} value {3}",
-                    bucketType, bucket, key, value);
+                    bucketType, bucket, key, value3);
             }
             else
             {
@@ -54,23 +54,42 @@ namespace demo
             else
             {
                 Console.WriteLine("failed to get data from dsdb server, ret " + ret);
-            }
-            
-            /* 删除数据 */
-            ret = client.delete(bucketType, bucket, key);
+            }        
+
+            /* 搜索数据 */
+            SearchOptions so = new SearchOptions();
+            so.index = "people";
+            so.condition = "name:name_0807_01";
+            so.rows = 100;
+            so.start = 0;
+
+            SearchResults dadbSearchResults = new SearchResults();
+            ret = client.search(so, out dadbSearchResults);
+
             if (ErrorCode.Success == ret)
             {
-                Console.WriteLine("successfully delete data, bucketType {0} bucket {1} key {2}",
-                    bucketType, bucket, key);
+                Console.WriteLine("数量为{0}", dadbSearchResults.numResults);
+
+                List<Dictionary<string, string>> dsdbSearchResult = dadbSearchResults.results;
+
+                for (int i = 0; i < dsdbSearchResult.Count; i++)
+                {
+                    Console.WriteLine("第{0}个", i + 1);
+                    foreach (var item in dsdbSearchResult[i])
+                    {
+                        Console.WriteLine(item.Key + " = " + item.Value);
+                    }
+                }
+
             }
             else
             {
-                Console.WriteLine("failed to delete data of dsdb server, ret " + ret);
+                Console.WriteLine("failed to search data of dsdb server, ret " + ret);
             }
-            
+
             /* 断开与服务器的连接 */
             client.disconnect();
-exit:
+        exit:
             /* 防止终端直接退出 */
             Console.ReadKey();
         }
